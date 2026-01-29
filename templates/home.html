@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page">
+
+    <div class="header">
+        <h1>Todo Dashboard</h1>
+    </div>
+
+    <div class="stats">
+
+        <div class="stat-card">
+            <small>Total Tasks</small>
+            <h2>{{ total_tasks }}</h2>
+        </div>
+
+        <div class="stat-card green">
+            <small>Completed</small>
+            <h2>{{ completed_tasks }}</h2>
+        </div>
+
+        <div class="stat-card orange">
+            <small>Todo</small>
+            <h2>{{ todo_tasks }}</h2>
+        </div>
+
+        <div class="stat-card blue">
+            <small>Categories</small>
+            <h2>{{ category_count }}</h2>
+        </div>
+
+    </div>
+
+    <div class="add-box">
+
+        <div class="add-title">Add New Task</div>
+
+        <form method="POST" class="add-grid">
+
+            <input name="task" placeholder="Task name" required>
+
+            <select name="priority" required>
+                <option disabled selected>Priority</option>
+                <option value="low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+
+            <select name="category" required>
+                <option disabled selected>Category</option>
+                {% for cat in categories %}
+                <option value="{{ cat.name }}">{{ cat.name }}</option>
+                {% endfor %}
+            </select>
+
+            <button class="btn primary">Add Task</button>
+
+        </form>
+
+        <form method="POST" class="cat-box">
+            <input name="category" placeholder="New Category" required>
+            <button class="btn secondary">Add Category</button>
+        </form>
+
+    </div>
+
+
+    {% for cat in categories %}
+
+    {% set total = namespace(v=0) %}
+    {% set completed = namespace(v=0) %}
+
+    {% for d in details %}
+    {% if d.category == cat.name %}
+    {% set total.v = total.v + 1 %}
+    {% if d.status %}
+    {% set completed.v = completed.v + 1 %}
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+
+    {% if total.v > 0 %}
+
+    {% set percent = (completed.v * 100) // total.v %}
+
+    <div class="category">
+
+        <div class="category-head">
+            <div>
+                <h3>{{ cat.name }}</h3>
+                <div class="category-count">
+                    {{ completed.v }} of {{ total.v }} completed
+                </div>
+            </div>
+
+            <a href="{{ url_for('delete_category', id=cat.id) }}" class="btn danger">Delete Category</a>
+        </div>
+
+
+
+        <div class="tasks">
+
+            {% for d in details if d.category == cat.name %}
+
+            <div class="task {{ d.priority }} {% if d.status %}done{% endif %}">
+
+                <div class="task-top">
+
+                    {% if d.status %}
+                    <span class="status completed">Completed</span>
+                    {% else %}
+                    <span class="status pending">Pending</span>
+                    {% endif %}
+
+                </div>
+
+                <form method="POST" action="{{ url_for('status', id=d.id) }}">
+                    <input type="checkbox" {% if d.status %}checked{% endif %} onchange="this.form.submit()">
+                </form>
+
+                <p>{{ d.task }}</p>
+
+                <div class="task-actions">
+
+                    {% if not d.status %}
+                    <a href="{{ url_for('edit', id=d.id) }}" class="btn small secondary">Edit</a>
+                    {% endif %}
+
+                    <a href="{{ url_for('delete', id=d.id) }}" class="btn small danger">Delete</a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+    </div>
+
+    {% endif %}
+    {% endfor %}
+
+</div>
+
+{% endblock %}

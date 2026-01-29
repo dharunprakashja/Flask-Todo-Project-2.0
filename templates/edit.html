@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page">
+
+<h2>Edit Task</h2>
+
+<div class="add-box">
+
+<form method="POST" class="edit-grid">
+
+<input name="task" value="{{ task.task }}" required>
+
+<select name="priority">
+<option value="low" {% if task.priority=='low' %}selected{% endif %}>Low</option>
+<option value="Medium" {% if task.priority=='Medium' %}selected{% endif %}>Medium</option>
+<option value="high" {% if task.priority=='high' %}selected{% endif %}>High</option>
+</select>
+
+<select name="category">
+{% for cat in categories %}
+<option value="{{ cat.name }}" {% if task.category==cat.name %}selected{% endif %}>
+{{ cat.name }}
+</option>
+{% endfor %}
+</select>
+
+<button class="btn warning">Save</button>
+
+<a href="{{ url_for('home') }}" class="btn danger">Cancel</a>
+
+</form>
+
+</div>
+
+</div>
+
+{% endblock %}

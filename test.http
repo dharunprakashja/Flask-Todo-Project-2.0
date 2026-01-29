@@ -1,0 +1,49 @@
+
+####
+POST http://localhost:5000/api/categories
+Content-Type: application/json
+
+{
+    "name": "EDUCATION"
+}
+
+###
+
+GET http://localhost:5000/api/categories
+
+###
+
+POST http://localhost:5000/api/tasks
+Content-Type: application/json
+
+{
+    "task": "dharun",
+    "priority": "high",
+    "category": "EDUCATION"
+}
+
+###
+
+
+GET http://localhost:5000/api/tasks
+
+###
+
+PUT http://localhost:5000/api/tasks/1
+Content-Type: application/json
+
+{
+    "task": "dharun",
+    "priority": "Medium",
+    "category": "EDUCATION"
+}
+
+###
+
+PUT http://localhost:5000/api/tasks/status/2
+
+###
+
+DELETE http://localhost:5000/api/tasks/6
+
+###
