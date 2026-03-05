@@ -1,17 +1,17 @@
 
-####
+####  DONE
 POST http://localhost:5000/api/categories
 Content-Type: application/json
 
 {
-    "name": "EDUCATION"
+    "name": "dcefdvvdvvefcd"
 }
 
-###
+### DONE
 
 GET http://localhost:5000/api/categories
 
-###
+### DONE
 
 POST http://localhost:5000/api/tasks
 Content-Type: application/json
@@ -22,28 +22,47 @@ Content-Type: application/json
     "category": "EDUCATION"
 }
 
-###
+### DONE
 
 
 GET http://localhost:5000/api/tasks
 
-###
+### DONE
 
-PUT http://localhost:5000/api/tasks/1
+
+GET http://localhost:5000/api/tasks/18
+
+### DONE
+
+PUT http://localhost:5000/api/tasks/22
 Content-Type: application/json
 
 {
-    "task": "dharun",
+    "task": "dhasccsrun",
     "priority": "Medium",
     "category": "EDUCATION"
 }
 
+### DONE
+
+PUT http://localhost:5000/api/categories/22
+Content-Type: application/json
+
+{
+    "name": "dcefdvvdvvefcd"
+}
+### DONE
+
+PUT http://localhost:5000/api/tasks/status/18
+
+### DONE
+
+DELETE http://localhost:5000/api/tasks/34
+
 ###
 
-PUT http://localhost:5000/api/tasks/status/2
-
 ###
 
-DELETE http://localhost:5000/api/tasks/6
+DELETE http://localhost:5000/api/categories/9
 
 ###

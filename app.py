@@ -113,6 +113,18 @@ def api_get_tasks():
         })
     return jsonify(box)
 
+@app.route('/api/tasks/<int:id>', methods=['GET'])
+def api_get_task(id):
+    task = Details.query.get(id)
+    if not task:
+        return jsonify({"error": "Task not found"}), 404
+    return jsonify({
+        "id": task.id,
+        "task": task.task,
+        "priority": task.priority,
+        "category": task.category,
+        "status": task.status
+    })
 
 @app.route('/api/tasks', methods=['POST'])
 def api_add_task():
@@ -130,7 +142,7 @@ def api_add_task():
 
     return jsonify({
         "message": "Task added",
-        "task": task_data.task
+        "id": task_data.id
     })
 
 
@@ -157,7 +169,6 @@ def api_delete_task(id):
 
     return jsonify({
         "status": "deleted",
-        "task": task_data.task
     })
 
 
@@ -190,6 +201,8 @@ def api_get_categories():
     return jsonify(box)
 
 
+
+
 @app.route('/api/categories', methods=['POST'])
 def api_add_category():
     data = request.get_json()
@@ -199,9 +212,11 @@ def api_add_category():
     db.session.commit()
 
     return jsonify({
-        "status": " added",
-        "name": cat.name
+        "status": "added",
+        "id": cat.id
     })
+
+
 
 @app.route('/api/categories/<int:id>', methods=['DELETE'])
 def api_delete_category(id):
@@ -215,7 +230,6 @@ def api_delete_category(id):
 
     return jsonify({
         "message": "Category deleted",
-        "id": id
     })
 
 @app.route('/delete_category/<int:id>')
@@ -233,4 +247,4 @@ def delete_category(id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)

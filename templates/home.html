@@ -40,14 +40,14 @@
             <input name="task" placeholder="Task name" required>
 
             <select name="priority" required>
-                <option disabled selected>Priority</option>
+                <option disabled selected value="">Priority</option>
                 <option value="low">Low</option>
                 <option value="Medium">Medium</option>
                 <option value="high">High</option>
             </select>
 
             <select name="category" required>
-                <option disabled selected>Category</option>
+                <option disabled selected value="">Category</option>
                 {% for cat in categories %}
                 <option value="{{ cat.name }}">{{ cat.name }}</option>
                 {% endfor %}
